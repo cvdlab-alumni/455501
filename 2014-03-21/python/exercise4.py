@@ -6,6 +6,7 @@ GRID = COMP([INSR(PROD),AA(QUOTE)])
 def colorRGB(values): #function that converts in RGB colors
     return Color4f([values[0]/255.0, values[1]/255.0, values[2]/255.0, 1.0])
 
+#### exercise1 ####
 
 ##ground floor
 floor0 = COLOR(colorRGB([255, 255, 204]))(CUBOID([15.8, 0, 15.8]))
@@ -73,12 +74,36 @@ chairs = STRUCT([t_throne, t_chair1, t_chair2])
 
 ##fourh floor
 floor4 = COLOR(colorRGB([255, 255, 204]))(CUBOID([10.6, 0, 11.2]))
-t_floor4 = T([1, 2, 3])([2, 7.6, 3.2])(floor4)
+t_floor4 = T([1, 2, 3])([2.5, 7.6, 4.2])(floor4)
 
 #2.5D
 two_and_half_model = STRUCT([floor0, t_floor1, t_floor2, t_floor3, t_floor4, columns, walls, chairs])
-VIEW(two_and_half_model)
+#VIEW(two_and_half_model)
 
 
+#### exercise2 ####
+
+##walls
+westWall = COLOR(colorRGB([255, 255, 204]))(CUBOID([0, 4.6, 5.5]))
+eastWall = COLOR(colorRGB([255, 255, 204]))(CUBOID([0, 4.6, 5.5]))
+northWall = COLOR(colorRGB([255, 255, 204]))(CUBOID([10, 4.6, 0]))
+southWall = COLOR(colorRGB([255, 255, 204]))(GRID([[3.6, -2.8, 3.6], [4.6], [0]]))
+
+west = T([1, 2, 3])([12.9, 3, 9.4])(westWall)
+east = T([1, 2, 3])([2.9, 3, 9.4])(eastWall)
+north = T([1, 2, 3])([2.9, 3, 14.9])(northWall)
+south = T([1, 2, 3])([2.9, 3, 9.4])(southWall)
+
+mock_up_3D = STRUCT([two_and_half_model, north, east, south, west])
+#VIEW(mock_up_3D)
 
 
+#### exercise4 ####
+
+##stairs
+step2D = MKPOL([[[0,0], [0, 0.1], [0.1,0.1]], [[1,2,3]], None])
+step3D = MAP([S1, S3, S2])(PROD([step2D, Q(2)]))
+stairs =  STRUCT(NN(14)([step3D,T([1,3])([0.1, 0.1])]))
+
+mock_up_3D = STRUCT([two_and_half_model, north, east, south, west, stairs])
+VIEW(mock_up_3D)
